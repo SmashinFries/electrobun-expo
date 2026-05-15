@@ -42,4 +42,8 @@ app-example
 /ios
 /android
 
+# Electrobun
+desktop/build
+desktop/artifact
+
 .vscode
