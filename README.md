@@ -1,50 +1,32 @@
-# Welcome to your Expo app 👋
+# Electrobun + React Native / Expo
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+An example of running an [Expo](https://docs.expo.dev/) app on desktop with [Electrobun](https://github.com/blackboardsh/electrobun).
 
-## Get started
+⚠️Production builds are currently untested⚠️
 
-1. Install dependencies
+## Getting started
 
-   ```bash
-   npm install
-   ```
+### Development
 
-2. Start the app
+`bun run desktop:dev`
 
-   ```bash
-   npx expo start
-   ```
+### Production Build
 
-In the output, you'll find options to open the app in a
+`bun run desktop:build`
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Observations
+### Metro config
+After making the rpc api with `defineRPC` and then running a dev build, I got the error: "Unable to resolve module ../shared/rpc.js". Turns out this is because electrobun is attempting to resolve `node_modules/electrobun/dist/api/shared/rpc.ts` but is importing as a `.js`.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+To quickly counter this, I stripped the `.js` before resolving.
 
-## Get a fresh project
+### Electrobun config
+The views entrypoint should be your expo web server url (ex: `"http://localhost:8081"`) for development and `dist/index.html` for production builds. 
 
-When you're ready, run:
+I had issues compiling due to files such as `favicon.ico` not bundling. Configuring the build.copy field solved this:
 
-```bash
-npm run reset-project
+```ts
+copy: {
+    "dist": "views/" 
+}
 ```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
